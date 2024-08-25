@@ -2,8 +2,9 @@ import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import io from 'socket.io-client'
+import { config } from "../../config";
 
-const socket = io.connect("http://localhost:5000")
+const socket = io.connect(config.backend)
 
 export const ChatContext = createContext(null)
 
@@ -17,7 +18,7 @@ export const ChatProvider = ({ children }) => {
      const userId = JSON.parse(localStorage.getItem("Chat-Me User"))
 
      const createChat = async (id, username) => {
-          axios.get(`http://localhost:5000/createChat/${userId.id}/${id}`).then(response => {
+          axios.get(`${config.backend}/createChat/${userId.id}/${id}`).then(response => {
                setCurrentChart(response.data.chat)
                setFriend(username)
           }).catch(error => {
@@ -32,7 +33,7 @@ export const ChatProvider = ({ children }) => {
      const sendMessage = (e) => {
           e.preventDefault()
           newMessage && setNewMessage(false)
-          axios.post("http://localhost:5000/createMessage", { chatId: currentChat._id, senderId: userId.id, text: writtenMessage }).then(response => {
+          axios.post(`${config.backend}/createMessage`, { chatId: currentChat._id, senderId: userId.id, text: writtenMessage }).then(response => {
                setNewMessage(true)
                setWrittenMessage('')
                socket.emit("sent Message", { chatId: currentChat._id, senderId: userId.id, text: writtenMessage })
@@ -52,7 +53,7 @@ export const ChatProvider = ({ children }) => {
 
      useEffect(() => {
           if (currentChat) {
-               axios.get("http://localhost:5000/allMessages/" + currentChat._id).then(response => {
+               axios.get(`${config.backend}/allMessages/` + currentChat._id).then(response => {
                     setMessages(response.data)
                }).catch(error => {
                     console.log(error)

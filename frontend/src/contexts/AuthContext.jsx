@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import axios from 'axios'
 import { toast } from "react-toastify";
 import { useGoogleLogin } from '@react-oauth/google'
+import { config } from "../../config";
 
 export const UserContext = createContext(null)
 
@@ -24,7 +25,7 @@ export const UserProvider = ({ children }) => {
           setLoading(true)
           setErrorGot(false)
           try {
-               axios.post("http://localhost:5000/register", { username: username, email: emailR, password: passwordR }).then(response => {
+               axios.post(`${config.backend}/register`, { username: username, email: emailR, password: passwordR }).then(response => {
                     setLoading(false)
                     localStorage.setItem("Chat-Me User", JSON.stringify(response.data))
                     setUser(response.data)
@@ -49,7 +50,7 @@ export const UserProvider = ({ children }) => {
           setLoading(true)
           setErrorGot(false)
           try {
-               axios.post("http://localhost:5000/signin", { email: emailL, password: passwordL }).then(response => {
+               axios.post(`${config.backend}/signin`, { email: emailL, password: passwordL }).then(response => {
                     setLoading(false)
                     localStorage.setItem("Chat-Me User", JSON.stringify(response.data))
                     setUser(response.data)
@@ -75,7 +76,7 @@ export const UserProvider = ({ children }) => {
                const getUsers = () => {
                     setLoading(true)
                     setErrorGot(false)
-                    axios.get("http://localhost:5000/allUsers/" + userId.id).then(response => {
+                    axios.get(`${config.backend}/allUsers/` + userId.id).then(response => {
                          setLoading(false)
                          setAllUsers(response.data)
                     }).catch(error => {
@@ -116,7 +117,7 @@ export const UserProvider = ({ children }) => {
 
      const sendGoogleAuth = async (data) => {
           try {
-               axios.post("http://localhost:5000/googleAuth", { data: data}).then(response => {
+               axios.post(`${config.backend}/googleAuth`, { data: data}).then(response => {
                     localStorage.setItem("Chat-Me User", JSON.stringify(response.data))
                     toast.success(response.data.message)
                     setTimeout(() => {
