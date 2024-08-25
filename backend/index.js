@@ -46,6 +46,6 @@ io.on("connection", (socket) => {
 
 })
 
-module.exports = server
+module.exports = app
 
 server.listen(process.env.PORT, () => console.log(`Server running on: http://localhost:${process.env.PORT}`))
