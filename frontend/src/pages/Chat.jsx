@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Chat = () => {
   const { allUsers, errorGot, loading } = useContext(UserContext)
-  const { createChat } = useContext(ChatContext)
+  const { createChat, recieve } = useContext(ChatContext)
   const navigate = useNavigate()
 
   return (
@@ -40,6 +40,8 @@ const Chat = () => {
       ) : (
         <div className={`mt-10 px-3`}>
           {allUsers.map((user, index) => {
+            // const view = (recieve.emmitted?.chatId != undefined || recieve.emmitted?.chatId != null) && recieve.emmitted.senderId == user._id ? recieve.emmitted.text : user.email
+            // console.log(view.senderId)
             return (
               <button className={`flex gap-2 bg-gray-100 px-3 py-2 rounded-lg hover:shadow-lg shadow-gray-500 mb-3 w-full`} key={index} onClick={
                 async () => {

@@ -4,6 +4,17 @@
      box-sizing: border-box;
 }
 
+/* ::-webkit-scrollbar {
+     width: 4px;
+     background: #0344;
+} */
+
+/* ::-webkit-scrollbar-thumb {
+     color: white;
+     height: 2px;
+     width: 3px;
+} */
+
 .linear-grad {
      background: linear-gradient(45deg, rgba(59, 130, 246), rgb(29, 78, 216), rgb(110, 50, 240));
 }

@@ -29,7 +29,7 @@ const createChat = async (req, res) => {
 
 const allChats = async (req, res) => {
      try {
-          const allChats = await ChatModel.find();
+          const allChats = await ChatModel.find().sort({ createdAt: -1});
           if (!allChats) return res.status(400).send({ message: "No Chats" });
 
           return res.status(200).send(allChats);
